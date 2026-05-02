@@ -1,64 +1,74 @@
 import { Link } from "react-router-dom";
 
-type IssueCardProps = {
+type Issue = {
   _id: string;
   issueType: string;
   location: string;
+  description: string;
   status: string;
 };
 
-export default function IssueCard({
-  _id,
-  issueType,
-  location,
-  status,
-}: IssueCardProps) {
+export default function IssueCard({ issue }: { issue: Issue }) {
   return (
-    <div className="card border-light shadow-sm mb-4 h-100">
-      <div className="card-body p-4">
-        {/* Issue Type Header */}
-        <div className="d-flex justify-content-between align-items-start mb-3">
-          <h6 className="card-title mb-0 fw-bold text-dark fs-5">
-            {issueType}
-          </h6>
-          
-          {/* Status Badge */}
-          <span
-            className={`badge fw-semibold px-3 py-2 rounded-pill ${
-              status === "Resolved" 
-                ? "bg-success-subtle text-success border border-success-subtle" 
-                : status === "In Progress"
-                ? "bg-warning-subtle text-warning border border-warning-subtle"
-                : "bg-secondary-subtle text-secondary border border-secondary-subtle"
-            }`}
-          >
-            {status}
-          </span>
-        </div>
+    <div
+      className="card shadow-sm"
+      style={{
+        backgroundColor: "#161d26",
+        border: "1px solid rgba(255,255,255,0.08)",
+        color: "#e6edf3",
+        borderRadius: "12px",
+        width: "22rem",
+      }}
+    >
 
-        {/* Location */}
-        <div className="mb-3">
-          <small className="text-muted fw-medium">
-            📍 <span className="text-dark">{location}</span>
-          </small>
-        </div>
+      {/* IMAGE */}
+      <img
+        src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6"
+        className="card-img-top"
+        style={{
+          height: "180px",
+          objectFit: "cover",
+          filter: "brightness(0.85)",
+        }}
+      />
 
-        {/* Action Buttons */}
-        <div className="d-flex gap-2">
-          <Link 
-            to={`/issue/${_id}`} 
-            className="btn btn-outline-primary btn-sm px-3 fw-medium"
-          >
-            <i className="bi bi-eye me-1"></i>View
-          </Link>
+      {/* BODY */}
+      <div className="card-body">
 
-          <Link 
-            to={`/edit/${_id}`} 
-            className="btn btn-outline-warning btn-sm px-3 fw-medium text-warning"
-          >
-            <i className="bi bi-pencil me-1"></i>Edit
-          </Link>
-        </div>
+        <h5 style={{ color: "#4a78d0" }}>{issue.issueType}</h5>
+
+        <p style={{ color: "#a9b4c0" }}>📍 {issue.location}</p>
+
+        <p style={{ color: "#a9b4c0", fontSize: "0.9rem" }}>
+          {issue.description?.length > 80
+            ? issue.description.substring(0, 80) + "..."
+            : issue.description}
+        </p>
+
+        {/* STATUS */}
+        <span
+          className="badge"
+          style={{
+            backgroundColor:
+              issue.status === "Resolved" ? "#7aa78c" : "#f0ad4e",
+            color: "white",
+          }}
+        >
+          {issue.status}
+        </span>
+
+        {/* BUTTON */}
+        <Link
+          to={`/issue/${issue._id}`}
+          className="btn btn-sm w-100 mt-3"
+          style={{
+            border: "1px solid #4a78d0",
+            color: "#4a78d0",
+          }}
+        >
+          View Details
+        </Link>
+
       </div>
     </div>
   );

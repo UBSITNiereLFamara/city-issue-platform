@@ -1,60 +1,48 @@
-import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+// src/App.tsx
 
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Contact from './pages/Contact'
-import CreateIssue from './pages/CreateIssue'
-import EditIssue from './pages/EditIssue'
-import IssueDetails from './pages/IssueDetails'
-import IssueList from './pages/IssueList'
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import IssueList from "./pages/IssueList";
+import CreateIssue from "./pages/CreateIssue";
+import IssueDetails from "./pages/IssueDetails";
+import EditIssue from "./pages/EditIssue";
+import Contact from "./pages/Contact";
+import ReportsPage from "./pages/ReportsPage";
+import "./App.css";
+import "./index.css";
 
-function App() {
+export default function App() {
   return (
     <Router>
-      <Navbar/>
-      <div className="container">
+      <Navbar />
 
-        <Routes>
+      <Routes>
+        {/* Home Landing Page */}
+        <Route path="/" element={<Home />} />
 
-          
-          <Route
-            path="/"
-            element={<IssueList />}
-          />
+        {/* Create Report */}
+        <Route path="/create" element={<CreateIssue />} />
 
-         
-          <Route
-            path="/contact"
-            element={<Contact />}
-          />
+        {/* Create Report */}
+        <Route path="/list" element={<IssueList />} />
 
-          <Route
-            path="/create-issue"
-            element={<CreateIssue />}
-          />
+        {/* Reports List */}
+        <Route path="/reports" element={<ReportsPage />} />
 
-          
-          <Route
-            path="/edit-issue/:id"
-            element={<EditIssue />}
-          />
+        {/* Details */}
+        <Route path="/issue/:id" element={<IssueDetails />} />
 
-          <Route
-            path="/issue/:id"
-            element={<IssueDetails />}
-          />
+        {/* Edit */}
+        <Route path="/edit/:id" element={<EditIssue />} />
 
-        </Routes>
+        {/* Contact */}
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
 
-      </div>
-
-      {/* Footer */}
       <Footer />
-
     </Router>
-  )
+  );
 }
-
-export default App

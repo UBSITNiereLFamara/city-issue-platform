@@ -2,42 +2,64 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg bg-light border-bottom shadow-sm">
+    <nav
+      className="navbar navbar-expand-lg sticky-top"
+      style={{
+        backgroundColor: "#161d26",
+        borderBottom: "1px solid rgba(255,255,255,0.08)",
+      }}
+    >
       <div className="container-fluid px-4">
-        <Link className="navbar-brand fw-bold fs-4 text-dark" to="/">
-          City Issue Platform
+
+        {/* BRAND */}
+        <Link
+          className="navbar-brand fw-bold"
+          style={{ color: "var(--royal)" }}
+          to="/"
+        >
+          Baguio Issue System
         </Link>
 
+        {/* TOGGLER */}
         <button
-          className="navbar-toggler bg-light border border-secondary-subtle rounded"
-          type="button"
+          className="navbar-toggler"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
+          data-bs-target="#nav"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
+        {/* LINKS */}
+        <div className="collapse navbar-collapse" id="nav">
+          <ul className="navbar-nav ms-auto gap-2">
+
             <li className="nav-item">
-              <Link className="nav-link text-dark fw-medium px-3 py-2 rounded-pill" to="/">
-                Issues
+              <Link className="nav-link text-light" to="/">
+                Home
               </Link>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link text-dark fw-medium px-3 py-2 rounded-pill" to="/create">
+              <Link className="nav-link text-light" to="/create">
                 Report Issue
               </Link>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link text-dark fw-medium px-3 py-2 rounded-pill" to="/contact">
+              <Link className="nav-link text-light" to="/reports">
+                View Reports
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link className="nav-link text-light" to="/contact">
                 Contact
               </Link>
             </li>
+
           </ul>
         </div>
+
       </div>
     </nav>
   );
