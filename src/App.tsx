@@ -1,7 +1,7 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-
+import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
 import Contact from './pages/Contact'
@@ -13,8 +13,7 @@ import IssueList from './pages/IssueList'
 function App() {
   return (
     <Router>
-
-      
+      <Navbar/>
       <div className="container">
 
         <Routes>
