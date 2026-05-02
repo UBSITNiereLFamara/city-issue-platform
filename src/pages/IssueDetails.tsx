@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getIssueById } from "../services/issueService";
+import type { Issue } from "../services/issueService";
 
 export default function IssueDetails() {
   const { id } = useParams();
-  const [issue, setIssue] = useState<any>(null);
+  const [issue, setIssue] = useState<Issue | null>(null);
 
   useEffect(() => {
-    if (id) loadIssue();
-  }, [id]);
+    const loadIssue = async () => {
+      if (!id) return;
 
-  const loadIssue = async () => {
-    const data = await getIssueById(id as string);
-    setIssue(data);
-  };
+      const data = await getIssueById(id);
+      setIssue(data);
+    };
+
+    loadIssue();
+  }, [id]);
 
   if (!issue) return <div className="container py-5">Loading...</div>;
 

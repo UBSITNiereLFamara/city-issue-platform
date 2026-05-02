@@ -14,13 +14,13 @@ export default function Home() {
   const [issues, setIssues] = useState<Issue[]>([]);
 
   useEffect(() => {
+    const loadIssues = async () => {
+      const data = await getIssues();
+      setIssues(data);
+    };
+
     loadIssues();
   }, []);
-
-  const loadIssues = async () => {
-    const data = await getIssues();
-    setIssues(data);
-  };
 
   return (
     <div style={{ backgroundColor: "#0f141a" }}>
@@ -94,11 +94,7 @@ export default function Home() {
             The Baguio City
           </h2>
 
-          <div
-            id="cityCarousel"
-            className="carousel slide"
-            data-bs-ride="carousel"
-          >
+          <div id="cityCarousel" className="carousel slide" data-bs-ride="carousel">
 
             <div className="carousel-indicators">
               <button type="button" data-bs-target="#cityCarousel" data-bs-slide-to="0" className="active" />
@@ -147,112 +143,6 @@ export default function Home() {
         </div>
       </section>
 
-{/* HOW IT WORKS */}
-<section style={{ padding: "70px 0", backgroundColor: "#0f141a" }}>
-  <div className="container text-center">
-
-    <h2 className="fw-bold" style={{ color: "#7aa78c" }}>
-      How It Works
-    </h2>
-
-    <p style={{ color: "#a9b4c0", maxWidth: "800px", margin: "15px auto" }}>
-      This platform is designed to make reporting city issues simple, fast, and accessible
-      for all residents of Baguio City. Every report goes through a structured workflow
-      to ensure proper tracking and resolution.
-    </p>
-
-    <div className="row mt-5">
-
-      <div className="col-md-4">
-        <div className="p-4 rounded" style={{ backgroundColor: "#161d26" }}>
-          <h5 style={{ color: "#4a78d0" }}>1. Report an Issue</h5>
-          <p style={{ color: "#a9b4c0" }}>
-            Citizens submit concerns such as road damage, garbage overflow, flooding,
-            or safety hazards using a simple online form. Location and description
-            help authorities understand the problem clearly.
-          </p>
-        </div>
-      </div>
-
-      <div className="col-md-4">
-        <div className="p-4 rounded" style={{ backgroundColor: "#161d26" }}>
-          <h5 style={{ color: "#4a78d0" }}>2. System Processing</h5>
-          <p style={{ color: "#a9b4c0" }}>
-            Submitted reports are stored in a centralized database. Each issue is assigned
-            a status (Pending or Resolved) so users and administrators can track progress
-            in real time.
-          </p>
-        </div>
-      </div>
-
-      <div className="col-md-4">
-        <div className="p-4 rounded" style={{ backgroundColor: "#161d26" }}>
-          <h5 style={{ color: "#4a78d0" }}>3. Resolution & Monitoring</h5>
-          <p style={{ color: "#a9b4c0" }}>
-            Local authorities or system administrators review reports and take action.
-            Once resolved, the issue status is updated, ensuring transparency and
-            accountability in city management.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-{/* WHY IT MATTERS */}
-<section style={{ padding: "70px 0", backgroundColor: "#161d26" }}>
-  <div className="container text-center">
-
-    <h2 className="fw-bold" style={{ color: "#7aa78c" }}>
-      Why This Matters
-    </h2>
-
-    <p style={{ color: "#a9b4c0", maxWidth: "850px", margin: "15px auto" }}>
-      Urban cities like Baguio face increasing challenges such as infrastructure damage,
-      waste management issues, and environmental concerns. This system supports
-      citizen participation in solving these problems.
-    </p>
-
-    <div className="row mt-5">
-
-      <div className="col-md-4">
-        <h6 style={{ color: "#e6edf3" }}>🏙️ Improved City Governance</h6>
-        <p style={{ color: "#a9b4c0" }}>
-          Enables local authorities to identify and prioritize community issues faster,
-          improving overall urban management and decision-making.
-        </p>
-      </div>
-
-      <div className="col-md-4">
-        <h6 style={{ color: "#e6edf3" }}>🤝 Active Citizen Participation</h6>
-        <p style={{ color: "#a9b4c0" }}>
-          Encourages residents to become active contributors in maintaining a clean,
-          safe, and sustainable environment for everyone.
-        </p>
-      </div>
-
-      <div className="col-md-4">
-        <h6 style={{ color: "#e6edf3" }}>⚡ Faster Response System</h6>
-        <p style={{ color: "#a9b4c0" }}>
-          Digital reporting reduces delays in communication, allowing faster action
-          on urgent city issues and improving response efficiency.
-        </p>
-      </div>
-
-    </div>
-
-    <div style={{ marginTop: "40px" }}>
-      <p style={{ color: "#a9b4c0", maxWidth: "800px", margin: "0 auto" }}>
-        This directly supports <strong style={{ color: "#4a78d0" }}>SDG 11: Sustainable Cities and Communities</strong>,
-        promoting inclusive, safe, resilient, and sustainable urban development.
-      </p>
-    </div>
-
-  </div>
-</section>
-
       {/* REPORTS PREVIEW */}
       <section style={{ padding: "60px 0" }}>
         <div className="container text-center">
@@ -263,6 +153,10 @@ export default function Home() {
 
           <p style={{ color: "#a9b4c0" }}>
             Preview of community reports (visit View Reports page for full list).
+          </p>
+
+          <p style={{ color: "#a9b4c0" }}>
+            Total Reports Submitted: <strong>{issues.length}</strong>
           </p>
 
         </div>

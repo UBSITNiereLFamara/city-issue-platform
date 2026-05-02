@@ -1,26 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getIssues } from "../services/issueService";
-
-type Issue = {
-  _id: string;
-  issueType: string;
-  location: string;
-  description: string;
-  status: string;
-};
+import type { Issue } from "../services/issueService";
 
 export default function IssueList() {
   const [issues, setIssues] = useState<Issue[]>([]);
 
   useEffect(() => {
+    const loadIssues = async () => {
+      const data = await getIssues();
+      setIssues(data);
+    };
+
     loadIssues();
   }, []);
-
-  const loadIssues = async () => {
-    const data = await getIssues();
-    setIssues(data);
-  };
 
   return (
     <div style={{ backgroundColor: "#0f141a", minHeight: "100vh" }}>

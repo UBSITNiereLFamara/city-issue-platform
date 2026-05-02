@@ -2,19 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { getIssues } from "../services/issueService";
+import type { Issue } from "../services/issueService";
 import IssueCard from "../components/IssueCard";
 
 export default function ReportsPage() {
-  const [issues, setIssues] = useState([]);
+  const [issues, setIssues] = useState<Issue[]>([]);
 
   useEffect(() => {
+    const loadIssues = async () => {
+      const data = await getIssues();
+      setIssues(data);
+    };
+
     loadIssues();
   }, []);
-
-  const loadIssues = async () => {
-    const data = await getIssues();
-    setIssues(data);
-  };
 
   return (
     <div className="container py-5">
@@ -23,7 +24,7 @@ export default function ReportsPage() {
       </h2>
 
       <div className="row g-4">
-        {issues.map((issue: any) => (
+        {issues.map((issue) => (
           <div className="col-md-6 col-lg-4" key={issue._id}>
             <IssueCard issue={issue} />
           </div>
