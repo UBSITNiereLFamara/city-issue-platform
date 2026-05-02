@@ -1,12 +1,5 @@
 import { Link } from "react-router-dom";
-
-type Issue = {
-  _id: string;
-  issueType: string;
-  location: string;
-  description: string;
-  status: string;
-};
+import type { Issue } from "../services/issueService";
 
 export default function IssueCard({ issue }: { issue: Issue }) {
   return (

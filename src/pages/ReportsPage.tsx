@@ -1,5 +1,3 @@
-// src/pages/ReportsPage.tsx
-
 import { useEffect, useState } from "react";
 import { getIssues } from "../services/issueService";
 import type { Issue } from "../services/issueService";
@@ -25,7 +23,7 @@ export default function ReportsPage() {
 
       <div className="row g-4">
         {issues.map((issue) => (
-          <div className="col-md-6 col-lg-4" key={issue._id}>
+          <div className="col-md-6 col-lg-4" key={issue._id || Math.random()}>
             <IssueCard issue={issue} />
           </div>
         ))}

@@ -1,14 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getIssues } from "../services/issueService";
-
-type Issue = {
-  _id: string;
-  issueType: string;
-  location: string;
-  description: string;
-  status: string;
-};
+import type { Issue } from "../services/issueService";
 
 export default function Home() {
   const [issues, setIssues] = useState<Issue[]>([]);
@@ -64,7 +57,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SDG + PURPOSE SECTION */}
+      {/* SDG + PURPOSE */}
       <section style={{ backgroundColor: "#0f141a", padding: "70px 0" }}>
         <div className="container text-center">
 
@@ -75,18 +68,13 @@ export default function Home() {
           <p className="mt-3" style={{ color: "#a9b4c0", maxWidth: "800px", margin: "0 auto" }}>
             This platform is designed to help improve urban living in <strong>Baguio City, Philippines</strong>.
             It allows citizens to report community issues such as road damage, waste management problems,
-            flooding, and public safety concerns—supporting a more sustainable and responsive city system.
-          </p>
-
-          <p className="mt-3" style={{ color: "#a9b4c0", maxWidth: "800px", margin: "0 auto" }}>
-            By encouraging civic participation, the system promotes cleaner environments, safer communities,
-            and faster government response aligned with the United Nations Sustainable Development Goals (SDG).
+            flooding, and public safety concerns.
           </p>
 
         </div>
       </section>
 
-      {/* CITY CAROUSEL */}
+      {/* 🔥 RESTORED CITY CAROUSEL */}
       <section style={{ padding: "70px 0", backgroundColor: "#161d26" }}>
         <div className="container">
 
@@ -97,9 +85,9 @@ export default function Home() {
           <div id="cityCarousel" className="carousel slide" data-bs-ride="carousel">
 
             <div className="carousel-indicators">
-              <button type="button" data-bs-target="#cityCarousel" data-bs-slide-to="0" className="active" />
-              <button type="button" data-bs-target="#cityCarousel" data-bs-slide-to="1" />
-              <button type="button" data-bs-target="#cityCarousel" data-bs-slide-to="2" />
+              <button type="button" data-bs-target="#cityCarousel" data-bs-slide-to="0" className="active"></button>
+              <button type="button" data-bs-target="#cityCarousel" data-bs-slide-to="1"></button>
+              <button type="button" data-bs-target="#cityCarousel" data-bs-slide-to="2"></button>
             </div>
 
             <div className="carousel-inner rounded-4 overflow-hidden">
@@ -108,7 +96,7 @@ export default function Home() {
                 <img
                   src="https://www.shutterstock.com/image-photo/la-trinidad-benguet-baguio-philiphines-600nw-2695013617.jpg"
                   className="d-block w-100"
-                  style={{ height: "420px", objectFit: "cover", filter: "brightness(0.75)" }}
+                  style={{ height: "420px", objectFit: "cover" }}
                 />
               </div>
 
@@ -116,7 +104,7 @@ export default function Home() {
                 <img
                   src="https://philippineshiddengems.com/wp-content/uploads/2025/01/tourist-spots-in-baguio_mines-view-park-in-baguio_kristine.jpg"
                   className="d-block w-100"
-                  style={{ height: "420px", objectFit: "cover", filter: "brightness(0.75)" }}
+                  style={{ height: "420px", objectFit: "cover" }}
                 />
               </div>
 
@@ -124,7 +112,7 @@ export default function Home() {
                 <img
                   src="https://www.undp.org/sites/g/files/zskgke326/files/styles/scaled_image_large/public/2025-06/eu-gepp-wed_2025_1_baguios_busy_mountainscape_against_the_city_sunset-photo_courtesy_of_baguio_city_planning_development_and_sustainability_office_cpdso.png"
                   className="d-block w-100"
-                  style={{ height: "420px", objectFit: "cover", filter: "brightness(0.75)" }}
+                  style={{ height: "420px", objectFit: "cover" }}
                 />
               </div>
 
@@ -143,17 +131,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* REPORTS PREVIEW */}
+      {/* REPORT PREVIEW */}
       <section style={{ padding: "60px 0" }}>
         <div className="container text-center">
 
           <h2 style={{ color: "#4a78d0" }}>
             Recent Reports in Baguio City
           </h2>
-
-          <p style={{ color: "#a9b4c0" }}>
-            Preview of community reports (visit View Reports page for full list).
-          </p>
 
           <p style={{ color: "#a9b4c0" }}>
             Total Reports Submitted: <strong>{issues.length}</strong>
