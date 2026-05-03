@@ -7,7 +7,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔥 PUT YOUR MONGODB STRING HERE (EDIT PASSWORD)
 mongoose
   .connect(
     "mongodb://20246896_db_user:Alyzter012345@ac-a6axmht-shard-00-00.wobahvn.mongodb.net:27017,ac-a6axmht-shard-00-01.wobahvn.mongodb.net:27017,ac-a6axmht-shard-00-02.wobahvn.mongodb.net:27017/cityIssueDB?ssl=true&replicaSet=atlas-1eveh8-shard-0&authSource=admin&retryWrites=true&w=majority"

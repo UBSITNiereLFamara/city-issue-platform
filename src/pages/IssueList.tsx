@@ -1,62 +1,91 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getIssues } from "../services/issueService";
+import { getIssues, deleteIssue } from "../services/issueService";
 import type { Issue } from "../services/issueService";
 
 export default function IssueList() {
   const [issues, setIssues] = useState<Issue[]>([]);
 
   useEffect(() => {
-    const loadIssues = async () => {
-      const data = await getIssues();
-      setIssues(data);
-    };
-
     loadIssues();
   }, []);
+
+  const loadIssues = async () => {
+    const data = await getIssues();
+    setIssues(data);
+  };
+
+  const handleDelete = async (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this issue?"
+    );
+
+    if (!confirmDelete) return;
+
+    await deleteIssue(id);
+    setIssues((prev) => prev.filter((issue) => issue._id !== id));
+  };
 
   return (
     <div style={{ backgroundColor: "#0f141a", minHeight: "100vh" }}>
 
-      {/* HEADER */}
-      <div className="container text-center py-5">
+      {/* HERO HEADER */}
+      <section
+        style={{
+          background:
+            "linear-gradient(rgba(15,20,26,0.88),rgba(15,20,26,0.88)), url('https://baguio.ph/wp-content/uploads/2020/10/Baguio-City-Colorful-City-View.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          padding: "80px 0",
+        }}
+      >
+        <div className="container text-center">
 
-        <h2 style={{ color: "#7aa78c" }} className="fw-bold">
-          Community Issue Reports
-        </h2>
+          <h1 className="fw-bold display-5" style={{ color: "#e6edf3" }}>
+            Community Issue Reports
+          </h1>
 
-        <p style={{ color: "#a9b4c0", maxWidth: "700px", margin: "0 auto" }}>
-          Below are real-time reports submitted by citizens of
-          <strong> Baguio City, Philippines</strong>. These issues help support
-          SDG 11: Sustainable Cities and Communities.
-        </p>
+          <p className="lead mt-3" style={{ color: "#a9b4c0" }}>
+            View real-time reports submitted by citizens of{" "}
+            <strong>Baguio City, Philippines</strong>.
+          </p>
 
-      </div>
+        </div>
+      </section>
 
-      {/* CAROUSEL */}
-      <section className="container pb-5">
+      <section style={{ padding: "60px 0", backgroundColor: "#161d26" }}>
+        <div className="container text-center">
+
+          <h2 className="fw-bold" style={{ color: "#7aa78c" }}>
+            What This Page Does
+          </h2>
+
+          <p style={{ color: "#a9b4c0", maxWidth: "850px", margin: "15px auto" }}>
+            This page shows all community issues reported by citizens. Each report
+            contains important details such as the issue type, location, and current
+            status. It helps track problems in the city and ensures that authorities
+            can respond more quickly and efficiently.
+          </p>
+
+          <p style={{ color: "#a9b4c0", maxWidth: "850px", margin: "0 auto" }}>
+            You can also view full details, edit reports, or delete outdated entries.
+            This system promotes transparency and supports better urban management
+            aligned with <strong>SDG 11: Sustainable Cities and Communities</strong>.
+          </p>
+
+        </div>
+      </section>
+
+      {/* REPORT CAROUSEL */}
+      <section className="container pb-5 pt-4">
 
         {issues.length === 0 ? (
           <p className="text-center" style={{ color: "#a9b4c0" }}>
             No reports available yet.
           </p>
         ) : (
-          <div id="issueCarousel" className="carousel slide" data-bs-ride="carousel">
+          <div id="issueCarousel" className="carousel slide">
 
-            {/* INDICATORS */}
-            <div className="carousel-indicators">
-              {issues.map((_, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  data-bs-target="#issueCarousel"
-                  data-bs-slide-to={index}
-                  className={index === 0 ? "active" : ""}
-                />
-              ))}
-            </div>
-
-            {/* CARDS */}
             <div className="carousel-inner">
 
               {issues.map((issue, index) => (
@@ -68,24 +97,22 @@ export default function IssueList() {
                   <div className="d-flex justify-content-center">
 
                     <div
-                      className="card shadow-lg"
+                      className="card"
                       style={{
-                        width: "22rem",
+                        width: "24rem",
                         backgroundColor: "#161d26",
                         color: "#e6edf3",
+                        borderRadius: "14px",
                         border: "1px solid rgba(255,255,255,0.08)",
-                        borderRadius: "12px",
                       }}
                     >
 
-                      {/* IMAGE */}
                       <img
-                        src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6"
+                        src="https://files01.pna.gov.ph/ograph/2025/09/11/bgo-breath-baguio-marker-september-11-2025lta.jpg"
                         className="card-img-top"
-                        style={{ height: "180px", objectFit: "cover" }}
+                        style={{ height: "190px", objectFit: "cover" }}
                       />
 
-                      {/* BODY */}
                       <div className="card-body">
 
                         <h5 style={{ color: "#4a78d0" }}>
@@ -96,10 +123,8 @@ export default function IssueList() {
                           📍 {issue.location}
                         </p>
 
-                        <p style={{ fontSize: "0.9rem", color: "#a9b4c0" }}>
-                          {issue.description?.length > 90
-                            ? issue.description.substring(0, 90) + "..."
-                            : issue.description}
+                        <p style={{ color: "#a9b4c0" }}>
+                          {issue.description}
                         </p>
 
                         <span
@@ -109,22 +134,47 @@ export default function IssueList() {
                               issue.status === "Resolved"
                                 ? "#7aa78c"
                                 : "#f0ad4e",
-                            color: "#fff",
                           }}
                         >
                           {issue.status}
                         </span>
 
-                        <Link
-                          to={`/issue/${issue._id}`}
-                          className="btn btn-sm w-100 mt-3"
-                          style={{
-                            border: "1px solid #4a78d0",
-                            color: "#4a78d0",
-                          }}
-                        >
-                          View Details
-                        </Link>
+                        <div className="d-grid gap-2 mt-3">
+
+                          <Link
+                            to={`/issue/${issue._id}`}
+                            className="btn btn-sm"
+                            style={{
+                              border: "1px solid #4a78d0",
+                              color: "#4a78d0",
+                            }}
+                          >
+                            View
+                          </Link>
+
+                          <Link
+                            to={`/edit/${issue._id}`}
+                            className="btn btn-sm"
+                            style={{
+                              backgroundColor: "#7aa78c",
+                              color: "white",
+                            }}
+                          >
+                            Edit
+                          </Link>
+
+                          <button
+                            onClick={() => issue._id && handleDelete(issue._id)}
+                            className="btn btn-sm"
+                            style={{
+                              backgroundColor: "#d9534f",
+                              color: "white",
+                            }}
+                          >
+                            Delete
+                          </button>
+
+                        </div>
 
                       </div>
 
@@ -137,37 +187,10 @@ export default function IssueList() {
 
             </div>
 
-            {/* CONTROLS */}
-            <button
-              className="carousel-control-prev"
-              type="button"
-              data-bs-target="#issueCarousel"
-              data-bs-slide="prev"
-            >
-              <span className="carousel-control-prev-icon"></span>
-            </button>
-
-            <button
-              className="carousel-control-next"
-              type="button"
-              data-bs-target="#issueCarousel"
-              data-bs-slide="next"
-            >
-              <span className="carousel-control-next-icon"></span>
-            </button>
-
           </div>
         )}
 
       </section>
-
-      {/* FOOT NOTE */}
-      <div className="text-center pb-5">
-        <p style={{ color: "#a9b4c0", fontSize: "0.9rem" }}>
-          All reports are part of a civic initiative to improve urban
-          sustainability and public service response in Baguio City.
-        </p>
-      </div>
 
     </div>
   );
