@@ -46,7 +46,7 @@ export default function EditIssue() {
 
   return (
     <div style={{ backgroundColor: "#0f141a", minHeight: "100vh" }}>
-      
+
       {/* HERO */}
       <section
         style={{
