@@ -53,6 +53,7 @@ export default function IssueList() {
         </div>
       </section>
 
+      {/* INFO SECTION */}
       <section style={{ padding: "60px 0", backgroundColor: "#161d26" }}>
         <div className="container text-center">
 
@@ -60,132 +61,145 @@ export default function IssueList() {
             What This Page Does
           </h2>
 
-          <p style={{ color: "#a9b4c0", maxWidth: "850px", margin: "15px auto" }}>
-            This page shows all community issues reported by citizens. Each report
-            contains important details such as the issue type, location, and current
-            status. It helps track problems in the city and ensures that authorities
-            can respond more quickly and efficiently.
+          <p
+            style={{
+              color: "#a9b4c0",
+              maxWidth: "850px",
+              margin: "15px auto",
+            }}
+          >
+            This page shows all community issues reported by citizens.
+            Each report contains important details such as the issue type,
+            location, and current status.
           </p>
 
-          <p style={{ color: "#a9b4c0", maxWidth: "850px", margin: "0 auto" }}>
-            You can also view full details, edit reports, or delete outdated entries.
-            This system promotes transparency and supports better urban management
-            aligned with <strong>SDG 11: Sustainable Cities and Communities</strong>.
+          <p
+            style={{
+              color: "#a9b4c0",
+              maxWidth: "850px",
+              margin: "0 auto",
+            }}
+          >
+            You can also view full details, edit reports, or delete
+            outdated entries.
           </p>
 
         </div>
       </section>
 
-      {/* REPORT CAROUSEL */}
-      <section className="container pb-5 pt-4">
+      {/* REPORTS */}
+      <section className="container py-5">
 
         {issues.length === 0 ? (
           <p className="text-center" style={{ color: "#a9b4c0" }}>
             No reports available yet.
           </p>
         ) : (
-          <div id="issueCarousel" className="carousel slide">
+          <div className="row g-4">
 
-            <div className="carousel-inner">
+            {issues.map((issue) => (
 
-              {issues.map((issue, index) => (
+              <div className="col-md-4" key={issue._id}>
+
                 <div
-                  key={issue._id}
-                  className={`carousel-item ${index === 0 ? "active" : ""}`}
+                  className="card h-100 shadow"
+                  style={{
+                    backgroundColor: "#161d26",
+                    color: "#e6edf3",
+                    borderRadius: "16px",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    overflow: "hidden",
+                  }}
                 >
 
-                  <div className="d-flex justify-content-center">
+                  <img
+                    src="https://files01.pna.gov.ph/ograph/2025/09/11/bgo-breath-baguio-marker-september-11-2025lta.jpg"
+                    className="card-img-top"
+                    style={{
+                      height: "220px",
+                      objectFit: "cover",
+                    }}
+                  />
 
-                    <div
-                      className="card"
-                      style={{
-                        width: "24rem",
-                        backgroundColor: "#161d26",
-                        color: "#e6edf3",
-                        borderRadius: "14px",
-                        border: "1px solid rgba(255,255,255,0.08)",
-                      }}
+                  <div className="card-body d-flex flex-column">
+
+                    <h4
+                      className="fw-bold mb-2"
+                      style={{ color: "#4a78d0" }}
                     >
+                      {issue.issueType}
+                    </h4>
 
-                      <img
-                        src="https://files01.pna.gov.ph/ograph/2025/09/11/bgo-breath-baguio-marker-september-11-2025lta.jpg"
-                        className="card-img-top"
-                        style={{ height: "190px", objectFit: "cover" }}
-                      />
+                    <p style={{ color: "#a9b4c0" }}>
+                      📍 {issue.location}
+                    </p>
 
-                      <div className="card-body">
+                    <p style={{ color: "#c9d1d9" }}>
+                      {issue.description}
+                    </p>
 
-                        <h5 style={{ color: "#4a78d0" }}>
-                          {issue.issueType}
-                        </h5>
+                    <div className="mb-3">
 
-                        <p style={{ color: "#a9b4c0" }}>
-                          📍 {issue.location}
-                        </p>
+                      <span
+                        className="badge"
+                        style={{
+                          backgroundColor:
+                            issue.status === "Resolved"
+                              ? "#7aa78c"
+                              : "#f0ad4e",
+                          padding: "8px 12px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        {issue.status}
+                      </span>
 
-                        <p style={{ color: "#a9b4c0" }}>
-                          {issue.description}
-                        </p>
+                    </div>
 
-                        <span
-                          className="badge"
-                          style={{
-                            backgroundColor:
-                              issue.status === "Resolved"
-                                ? "#7aa78c"
-                                : "#f0ad4e",
-                          }}
-                        >
-                          {issue.status}
-                        </span>
+                    <div className="d-grid gap-2 mt-auto">
 
-                        <div className="d-grid gap-2 mt-3">
+                      <Link
+                        to={`/issue/${issue._id}`}
+                        className="btn btn-sm"
+                        style={{
+                          border: "1px solid #4a78d0",
+                          color: "#4a78d0",
+                        }}
+                      >
+                        View
+                      </Link>
 
-                          <Link
-                            to={`/issue/${issue._id}`}
-                            className="btn btn-sm"
-                            style={{
-                              border: "1px solid #4a78d0",
-                              color: "#4a78d0",
-                            }}
-                          >
-                            View
-                          </Link>
+                      <Link
+                        to={`/edit/${issue._id}`}
+                        className="btn btn-sm"
+                        style={{
+                          backgroundColor: "#7aa78c",
+                          color: "white",
+                        }}
+                      >
+                        Edit
+                      </Link>
 
-                          <Link
-                            to={`/edit/${issue._id}`}
-                            className="btn btn-sm"
-                            style={{
-                              backgroundColor: "#7aa78c",
-                              color: "white",
-                            }}
-                          >
-                            Edit
-                          </Link>
-
-                          <button
-                            onClick={() => issue._id && handleDelete(issue._id)}
-                            className="btn btn-sm"
-                            style={{
-                              backgroundColor: "#d9534f",
-                              color: "white",
-                            }}
-                          >
-                            Delete
-                          </button>
-
-                        </div>
-
-                      </div>
+                      <button
+                        onClick={() => issue._id && handleDelete(issue._id)}
+                        className="btn btn-sm"
+                        style={{
+                          backgroundColor: "#d9534f",
+                          color: "white",
+                        }}
+                      >
+                        Delete
+                      </button>
 
                     </div>
 
                   </div>
 
                 </div>
-              ))}
 
-            </div>
+              </div>
+
+            ))}
 
           </div>
         )}
